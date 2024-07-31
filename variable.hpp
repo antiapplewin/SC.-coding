@@ -80,3 +80,46 @@ string callVariString(string name) {
 	
 	return "-3";
 }
+
+int ChangeValue(string name, string value) {
+	bool is_in = false;
+	for (int i = 0; i<vars_name.size(); i++) {
+		if (vars_name[i] == name) {
+			is_in = true;
+		}
+	}
+	if (is_in == false) return -1;
+	
+	int ty = vars_type[name];
+	
+	if (ty==0) 
+		try {
+			int_vars[name] = stoll(value);
+		} catch (const invalid_argument&e) {
+			cout << "Error Occurred! \nErrorType : InvalidArgument\n"; 
+		} catch (const out_of_range&e) {
+			cout << "Error Occurred! \nErrorType : OutOfRange\n";
+		} catch(...) {
+			cout << "Error Occurred! \nErrorType : UnexpectedErrorFound\n";
+		}
+	else if (ty==1) 
+		try {
+			float_vars[name] = stod(value);
+		} catch (const invalid_argument&e) {
+			cout << "Error Occurred! \nErrorType : InvalidArgument\n"; 
+		} catch (const out_of_range&e) {
+			cout << "Error Occurred! \nErrorType : OutOfRange\n";
+		} catch(...) {
+			cout << "Error Occurred! \nErrorType : UnexpectedErrorFound\n";
+		}
+	else if (ty==2) {
+		if (value=="true") bool_vars[name] = true;
+		else bool_vars[name] = false;
+	}
+	else if (ty==3)
+		char_vars[name] = value[0];
+	else 
+		string_vars[name] = value;
+	
+	return 0;
+}
